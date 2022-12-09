@@ -12,7 +12,7 @@
 
 <form style="background-color: #3f6a9e;">
     <fieldset>
-        <legend> range</legend>
+        <legend>Parámetros</legend>
         <p>Rango de AMPLITUD: <br>
             <input type="range" onchange = "cambio_ampli(this.value); "  min="1" max="10" value="5" >
         </p>
@@ -21,6 +21,20 @@
         </p>
         <p>Rango de FASE: <br>
             <input type="range" onchange = "cambio_fase(this.value); "  min="1" max="10" value="5" >
+        </p>
+    </fieldset>
+</form>
+<form style="background-color: #14c7af;">
+    <fieldset>
+        <legend>Parámetros Circulo</legend>
+        <p>Rango de AMPLITUD: <br>
+            <input type="range" onchange = "cambio_ampli2(this.value); "  min="1" max="10" value="5" >
+        </p>
+        <p>Rango de FRECUENCIA: <br>
+            <input type="range" onchange = "cambio_frecuencia2(this.value); "  min="1" max="100" value="5" >
+        </p>
+        <p>Rango de FASE: <br>
+            <input type="range" onchange = "cambio_fase2(this.value); "  min="1" max="10" value="5" >
         </p>
     </fieldset>
 </form>
@@ -92,24 +106,42 @@ function cambio_frecuencia(r) {
 }
 
 
-var x2=180,y2=360;
+var x2=0,y2=180;
 var A2=1;
-function dibuja2(){
-    for(i=0; i<=360; i+=10){
-        ctx.moveTo(x2,y2);
+var counter2 = 0, x0,y=180;
+var increase2 = 90/180*Math.PI / 9;
+function dibuja2(fase2){
+    ctx2.clearRect(0,0,1000,1000);
+    ctx2.moveTo(0,0);
+    ctx2.beginPath();
+    
+    for(i2=0; i2<=360; i2+=10){
+        ctx2.moveTo(x2,y2);
         //x = i;
-        x = (180 - A2*Math.cos(counter)* 120);
-        y = (180 - A2*Math.sin(counter)* 120);
-    counter += increase;
+        x2 =  (180 - A2*Math.cos(counter2+fase2)* 120);
+        y2 = (180 - A2*Math.sin(counter2+fase2)* 120);
+    counter2 += increase2;
         
-        ctx.lineTo(x2,y2);
-        ctx.stroke();
+        ctx2.lineTo(x2,y2);
+        ctx2.stroke();
         //alert( " x : " + x + " y : " + y + " increase : " + counter ) ;
-        ctx.beginPath();
+        ctx2.beginPath();
+}
+}
+function cambio_ampli2(r2) {
+    A2=r2/10
+    dibuja2(0)
+}
+function cambio_fase2(r2) {
+
+    fase2=((r2/10)*2*Math.PI)
+    dibuja2(fase)
+}
+function cambio_frecuencia2(r2) {
+    increase2=r2*90/180*Math.PI / 9;
+    dibuja2(0)
 }
 
-}
-dibuja2()
 
 </script>
 
