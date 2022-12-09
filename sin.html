@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Ocho</title>
+<title>Funciones</title>
 </head>
 <body>
 
-<h1>Ocho</h1>
+<h1>FUNCIONES</h1>
 
-<canvas id="myCanvas" width="360" height="360" style="border:1px solid #d3d3d3;">
-</canvas>
+<canvas id="myCanvas" width="360" height="360" style="border:1px solid #d3d3d3;"></canvas>
+<canvas id="myCanvas2" width="360" height="360" style="border:1px solid #d3d3d3;"></canvas>
+
 <form style="background-color: #3f6a9e;">
     <fieldset>
         <legend> range</legend>
-        <p>Campo de numero dentro de un rango: <br>
-            <input type="range" onchange = "cambio(this.value); "  min="1" max="10" value="5" >
+        <p>Rango de AMPLITUD: <br>
+            <input type="range" onchange = "cambio_ampli(this.value); "  min="1" max="10" value="5" >
+        </p>
+        <p>Rango de FRECUENCIA: <br>
+            <input type="range" onchange = "cambio_frecuencia(this.value); "  min="1" max="100" value="5" >
+        </p>
+        <p>Rango de FASE: <br>
+            <input type="range" onchange = "cambio_fase(this.value); "  min="1" max="10" value="5" >
         </p>
     </fieldset>
 </form>
 
 <script>
-    var c = document.getElementById("myCanvas");
+var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 var i;
 for(i=0; i<360; i+= 20){
@@ -29,32 +36,80 @@ for(i=0; i<360; i+= 20){
 }
 ctx.stroke();
 
+
+var c2 = document.getElementById("myCanvas2");
+var ctx2 = c2.getContext("2d");
+var i2;
+for(i2=0; i2<360; i2+= 20){
+ ctx2.moveTo(i2+5,180);
+    ctx2.lineTo(i2,180);
+
+}
+ctx2.stroke();
+
+
+
+
+
 var counter = 0, x=0,y=180;
 
 
 //100 iterations
 var increase = 90/180*Math.PI / 9;
 var A=1
-function dibuja(){
+function dibuja(fase){
+    ctx.clearRect(0,0,1000,1000);
+    ctx.moveTo(0,0);
+    ctx.beginPath();
+    
     for(i=0; i<=360; i+=10){
-        
         ctx.moveTo(x,y);
         //x = i;
-        x =  180 - A*Math.sin(counter*2) * 120;
-        y =  180 - A*Math.sin(counter) * 120;
+        x =  i;
+        y = (180 - A*Math.cos(counter+fase)* 120);
     counter += increase;
         
         ctx.lineTo(x,y);
         ctx.stroke();
         //alert( " x : " + x + " y : " + y + " increase : " + counter ) ;
+        ctx.beginPath();
 }
 
 }
 dibuja()
-function cambio(r) {
+function cambio_ampli(r) {
     A=r/10
-    dibuja()
+    dibuja(0)
 }
+function cambio_fase(r) {
+
+    fase=((r/10)*2*Math.PI)
+    dibuja(fase)
+}
+function cambio_frecuencia(r) {
+    increase=r*90/180*Math.PI / 9;
+    dibuja(0)
+}
+
+
+var x2=180,y2=360;
+var A2=1;
+function dibuja2(){
+    for(i=0; i<=360; i+=10){
+        ctx.moveTo(x2,y2);
+        //x = i;
+        x = (180 - A2*Math.cos(counter)* 120);
+        y = (180 - A2*Math.sin(counter)* 120);
+    counter += increase;
+        
+        ctx.lineTo(x2,y2);
+        ctx.stroke();
+        //alert( " x : " + x + " y : " + y + " increase : " + counter ) ;
+        ctx.beginPath();
+}
+
+}
+dibuja2()
 
 </script>
 
