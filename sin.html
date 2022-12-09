@@ -33,9 +33,6 @@
         <p>Rango de FRECUENCIA: <br>
             <input type="range" onchange = "cambio_frecuencia2(this.value); "  min="1" max="100" value="5" >
         </p>
-        <p>Rango de FASE: <br>
-            <input type="range" onchange = "cambio_fase2(this.value); "  min="1" max="10" value="5" >
-        </p>
     </fieldset>
 </form>
 
@@ -110,7 +107,7 @@ var x2=0,y2=180;
 var A2=1;
 var counter2 = 0, x0,y=180;
 var increase2 = 90/180*Math.PI / 9;
-function dibuja2(fase2){
+function dibuja2(){
     ctx2.clearRect(0,0,1000,1000);
     ctx2.moveTo(0,0);
     ctx2.beginPath();
@@ -118,8 +115,8 @@ function dibuja2(fase2){
     for(i2=0; i2<=360; i2+=10){
         ctx2.moveTo(x2,y2);
         //x = i;
-        x2 =  (180 - A2*Math.cos(counter2+fase2)* 120);
-        y2 = (180 - A2*Math.sin(counter2+fase2)* 120);
+        x2 =  (180 - A2*Math.cos(counter2)* 120);
+        y2 = (180 - A2*Math.sin(counter2)* 120);
     counter2 += increase2;
         
         ctx2.lineTo(x2,y2);
@@ -130,16 +127,11 @@ function dibuja2(fase2){
 }
 function cambio_ampli2(r2) {
     A2=r2/10
-    dibuja2(0)
-}
-function cambio_fase2(r2) {
-
-    fase2=((r2/10)*2*Math.PI)
-    dibuja2(fase)
+    dibuja2()
 }
 function cambio_frecuencia2(r2) {
     increase2=r2*90/180*Math.PI / 9;
-    dibuja2(0)
+    dibuja2()
 }
 
 
