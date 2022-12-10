@@ -9,8 +9,9 @@
 
 <canvas id="myCanvas" width="360" height="360" style="border:1px solid #d3d3d3;"></canvas>
 <canvas id="myCanvas2" width="360" height="360" style="border:1px solid #d3d3d3;"></canvas>
+<canvas id="myCanvas3" width="360" height="360" style="border:1px solid #d3d3d3;"></canvas>
 
-<form style="background-color: #3f6a9e;">
+<form style="background-color: #d1a341;">
     <fieldset>
         <legend>Parámetros</legend>
         <p>Rango de AMPLITUD: <br>
@@ -30,8 +31,32 @@
         <p>Rango de AMPLITUD: <br>
             <input type="range" onchange = "cambio_ampli2(this.value); "  min="1" max="10" value="5" >
         </p>
+        
         <p>Rango de FRECUENCIA: <br>
             <input type="range" onchange = "cambio_frecuencia2(this.value); "  min="1" max="100" value="5" >
+        </p>
+    </fieldset>
+</form>
+<form style="background-color: #eba2ee;">
+    <fieldset>
+        <legend>Parámetros Lissajous</legend>
+        <p>Rango de AMPLITUD 1: <br>
+            <input type="range" onchange = "cambio_ampli3_1(this.value); "  min="1" max="10" value="5" >
+        </p>
+        <p>Rango de AMPLITUD 2: <br>
+            <input type="range" onchange = "cambio_ampli3_2(this.value); "  min="1" max="10" value="5" >
+        </p>
+        <p>Rango de FRECUENCIA 1: <br>
+            <input type="range" onchange = "cambio_frecuencia3_1(this.value); "  min="1" max="5" value="1" >
+        </p>
+        <p>Rango de FRECUENCIA 2: <br>
+            <input type="range" onchange = "cambio_frecuencia3_2(this.value); "  min="1" max="5" value="1" >
+        </p>
+        <p>Rango de FASE 1<br>
+            <input type="range" onchange = "cambio_fase3_1(this.value); "  min="1" max="100" value="5" >
+        </p>
+        <p>Rango de FASE 2<br>
+            <input type="range" onchange = "cambio_fase3_2(this.value); "  min="1" max="100" value="5" >
         </p>
     </fieldset>
 </form>
@@ -57,6 +82,16 @@ for(i2=0; i2<360; i2+= 20){
 
 }
 ctx2.stroke();
+
+var c3 = document.getElementById("myCanvas3");
+var ctx3 = c3.getContext("2d");
+var i3;
+for(i3=0; i3<360; i3+= 20){
+ ctx3.moveTo(i3+5,180);
+    ctx3.lineTo(i3,180);
+
+}
+ctx3.stroke();
 
 
 
@@ -89,23 +124,23 @@ function dibuja(fase){
 }
 dibuja()
 function cambio_ampli(r) {
-    A=r/10
-    dibuja(0)
+    A=r/10;
+    dibuja(0);
 }
 function cambio_fase(r) {
 
-    fase=((r/10)*2*Math.PI)
-    dibuja(fase)
+    fase=((r/10)*2*Math.PI);
+    dibuja(fase);
 }
 function cambio_frecuencia(r) {
     increase=r*90/180*Math.PI / 9;
-    dibuja(0)
+    dibuja(0);
 }
 
 
 var x2=0,y2=180;
 var A2=1;
-var counter2 = 0, x0,y=180;
+var counter2 = 0, x2=0,y2=180;
 var increase2 = 90/180*Math.PI / 9;
 function dibuja2(){
     ctx2.clearRect(0,0,1000,1000);
@@ -126,14 +161,67 @@ function dibuja2(){
 }
 }
 function cambio_ampli2(r2) {
-    A2=r2/10
-    dibuja2()
+    A2=r2/10;
+    dibuja2();
 }
 function cambio_frecuencia2(r2) {
     increase2=r2*90/180*Math.PI / 9;
-    dibuja2()
+    dibuja2();
 }
 
+
+var x3=0,y3=180;
+var A3_1=1, A3_2=1;
+var frecuencia_1=1, frecuencia_2=1;
+var fase3_1=0, fase3_2=0;
+var contador=0 , x3=0,y3=180;
+var increase3 = 90/180*Math.PI / 9;
+function dibuja3(){
+    ctx3.clearRect(0,0,1000,1000);
+    ctx3.moveTo(0,0);
+    ctx3.beginPath();
+    
+    for(i3=0; i3<=360; i3+=10){
+        ctx3.moveTo(x3,y3);
+        //x = i;
+        x3 = (180 - A3_1*Math.cos(frecuencia_1*contador+fase3_1)* 120);
+        y3 = (180 - A3_2*Math.sin(frecuencia_2*contador+fase3_2)* 120);
+    contador += increase3;
+        
+        ctx3.lineTo(x3,y3);
+        ctx3.stroke();
+        //alert( " x : " + x + " y : " + y + " increase : " + counter ) ;
+        ctx3.beginPath();
+}
+}
+
+function cambio_ampli3_1(r3) {
+    A3_1=r3/10;
+    dibuja3();
+}
+function cambio_fase3_1(r3) {
+    fase3_1=(r3*Math.PI)/10;
+    dibuja3();
+}
+function cambio_frecuencia3_1(r3) {
+    frecuencia_1=0;
+    frecuencia_1=r3;
+    dibuja3();
+}
+
+function cambio_ampli3_2(r3) {
+    A3_2=r3/10;
+    dibuja3();
+}
+function cambio_fase3_2(r3) {
+    fase3_2=(r3*Math.PI)/10;
+    dibuja3();
+}
+function cambio_frecuencia3_2(r3) {
+    frecuencia_2=0;
+    frecuencia_2=r3;
+    dibuja3();
+}
 
 </script>
 
